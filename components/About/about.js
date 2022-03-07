@@ -60,6 +60,8 @@ export default function About() {
           <CustomButton
             textHoverGradientColor={linearGradient}
             buttonHoverColor="white"
+            as="a"
+            href="https://www.linkedin.com/in/andy-fung-739a15123"
           >
             Connect me on LinkedIn
           </CustomButton>
