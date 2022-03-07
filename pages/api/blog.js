@@ -6,7 +6,7 @@ export default async (req, res) => {
   if (session) {
     res.send({
       content:
-        "This is protected content. You can access this content because you are signed in.",
+        "This is protected content. You can access this content because you are signed in. And I haven't write anything yet!",
     });
   } else {
     res.send({
