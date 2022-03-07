@@ -31,13 +31,14 @@ export default function CustomButton({
         h="100%"
         width="100%"
         align="center"
+        justifyContent="center"
         _hover={{
           bgGradient: textHoverGradientColor,
           bgClip: "text",
           color: textHoverColor,
         }}
       >
-        <Text> {children}</Text>
+        <Text textAlign="center"> {children}</Text>
       </Flex>
     </MotionButton>
   );
