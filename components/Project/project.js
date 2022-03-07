@@ -43,7 +43,7 @@ export default function Project({ projectDatas }) {
               variants={topVariant}
               initial="hidden"
               whileInView="visible"
-              mb={6}
+              mb={[16, 24]}
             >
               <MotionGridItem
                 colSpan={[12, 12, 4]}

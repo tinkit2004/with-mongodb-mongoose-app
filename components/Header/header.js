@@ -93,7 +93,7 @@ const Header = () => {
 
           <CustomButton
             as="a"
-            href="/signup"
+            href="/auth/signup"
             buttonHoverColor={linearGradient}
             buttonHoverBrightness="95%"
             textHoverColor="white"
