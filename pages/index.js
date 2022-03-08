@@ -5,7 +5,9 @@ import Project from "../components/Project/project";
 import Layout from "../components/layout";
 import Contact from "../components/Contact/contact";
 import About from "../components/About/about";
-import Hero from "../components/Hero/hero";
+
+import dynamic from "next/dynamic";
+const Hero = dynamic(() => import("../components/Hero/hero"), { ssr: false });
 const Index = ({ projectDatas }) => (
   <>
     <Layout>

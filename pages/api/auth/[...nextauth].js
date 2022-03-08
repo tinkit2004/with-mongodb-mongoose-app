@@ -139,7 +139,7 @@ export default NextAuth({
   // https://next-auth.js.org/configuration/callbacks
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      console.log(user);
+      //console.log(user);
       if (user) {
         return true;
       } else {

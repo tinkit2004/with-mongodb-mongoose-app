@@ -7,7 +7,7 @@ export default function Hero() {
   return (
     <Stack align="center" h="90vh" justify="center">
       <Text fontSize="6xl" fontWeight="700">
-        Hi I'm{" "}
+        {"Hi I'm" + " "}
         <Text as="span" bgGradient={linearGradient} bgClip="text">
           Andy
         </Text>
@@ -16,7 +16,7 @@ export default function Hero() {
         <Text fontSize="lg" mr={2}>
           I'm a
         </Text>
-        <Text fontSize="lg" fontWeight={700}>
+        <Text as="span" fontSize="lg" fontWeight={700}>
           <Typewriter
             options={{ loop: true }}
             onInit={(typewriter) => {
