@@ -24,6 +24,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useAccount } from "wagmi";
 import dynamic from "next/dynamic";
 const WalletOption = dynamic(
   () => import("../../components/WalletOption/walletOption.js"),
@@ -39,6 +40,7 @@ export default function SignInCard() {
   } = methods;
 
   const { data: session, status } = useSession();
+  const [{ data: accountData }] = useAccount();
   const router = useRouter();
   const [formError, setFormError] = useState("");
   if (status === "authenticated" || accountData) {
