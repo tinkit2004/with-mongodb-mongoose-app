@@ -16,7 +16,7 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import FormControlField from "../../components/FormControlField/form-control-field";
 import SignInWithGoogle from "../../components/SignInWithGoogle/sign-in-with-google";
@@ -25,25 +25,34 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useAccount } from "wagmi";
+import dynamic from "next/dynamic";
+const WalletOption = dynamic(
+  () => import("../../components/WalletOption/walletOption.js"),
+  { ssr: false }
+);
 export default function SignUpCard() {
-  // const [signUpInfo, setSignUpInfo] = useState({
-  //   firstName: "",
-  //   lastName: "",
-  //   email: "",
-  //   password: "",
-  // });
-  // const { firstName, lastName, email, password } = signUpInfo;
-  //console.log(firstName);
-  // const handleChange = (event) => {
-  //   const { name, value } = event.target;
-  //   setSignUpInfo((prevSignUpInfo) => {
-  //     return {
-  //       ...prevSignUpInfo,
-  //       [name]: value,
-  //     };
-  //   });
-  //   // console.log(signUpInfo);
-  // };
+  const [{ data: accountData }] = useAccount();
+  //Get the connected wallet info on page load like the address
+  const [state, setState] = useState({});
+  useEffect(() => {
+    const handler = async () => {
+      try {
+        const res = await fetch("/api/me");
+        const json = await res.json();
+        setState((x) => ({ ...x, address: json.address }));
+      } finally {
+        setState((x) => ({ ...x, loading: false }));
+      }
+    };
+    // 1. page loads
+    (async () => await handler())();
+
+    // 2. window is focused (in case user logs out of another window)
+    window.addEventListener("focus", handler);
+    return () => window.removeEventListener("focus", handler);
+  }, []);
+
   const methods = useForm({
     defaultValues: { email: "", password: "", firstName: "", lastName: "" },
   });
@@ -58,7 +67,7 @@ export default function SignUpCard() {
   const [formError, setFormError] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
-  if (status === "authenticated") {
+  if (status === "authenticated" || accountData) {
     router.push("/");
   }
 
@@ -79,25 +88,6 @@ export default function SignUpCard() {
         router.push(url);
       }
       reset();
-      // const response = await fetch("http://localhost:3000/api/signup", {
-      //   method: "post",
-      //   headers: { "Content-type": "application/json" },
-      //   body: JSON.stringify({
-      //     email: email,
-      //     password: password,
-      //     lastName: lastName,
-      //     name: firstName,
-      //   }),
-      // });
-      // const data = await response.json();
-      // console.log(user);
-      // if (data.success) {
-      //   signIn("credentials", {
-      //     redirect: false,
-      //     email: email,
-      //     password: password,
-      //   });
-      // }
     } catch (error) {
       console.log(error);
     }
@@ -126,7 +116,7 @@ export default function SignUpCard() {
               boxShadow={"lg"}
               p={8}
             >
-              <Stack spacing={4}>
+              <Stack>
                 <HStack>
                   <Box>
                     <FormControlField
@@ -197,10 +187,11 @@ export default function SignUpCard() {
                     {formError}
                   </Text>
                 )}
-                <Stack spacing={5} pt={2}>
+                <Stack spacing={5} pt={2} mb={0}>
                   <SubmitButton>Sign Up</SubmitButton>
                   <SignInWithGoogle />
                 </Stack>
+                <WalletOption />
                 <Stack pt={6}>
                   <Text align={"center"}>
                     Already a user?{" "}

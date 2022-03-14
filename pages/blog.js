@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Layout from "../components/layout";
 import AccessDenied from "../components/AccessDenied/access-denied";
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
+import { useAccount } from "wagmi";
 export default function Page() {
   const { data: session, status } = useSession();
+  const [{ data: accountData }] = useAccount();
   const loading = status === "loading";
   const [content, setContent] = useState();
 
@@ -24,7 +26,7 @@ export default function Page() {
   if (typeof window !== "undefined" && loading) return null;
 
   // If no session exists, display access denied message
-  if (!session) {
+  if (!session && !accountData) {
     return (
       <Layout>
         <Box
@@ -52,7 +54,11 @@ export default function Page() {
         justifyContent="center"
         alignItems="center"
       >
-        <h1>Protected Page</h1>
+        <Text as="h1" fontSize="xl">
+          Protected Page
+        </Text>
+        <Text>You are now signed in using </Text>
+        {accountData && <p>{accountData.address}</p>}
         <p>
           <strong>{content || "\u00a0"}</strong>
         </p>

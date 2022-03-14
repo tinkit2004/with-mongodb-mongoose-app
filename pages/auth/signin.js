@@ -24,6 +24,11 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { FormProvider, useForm } from "react-hook-form";
+import dynamic from "next/dynamic";
+const WalletOption = dynamic(
+  () => import("../../components/WalletOption/walletOption.js"),
+  { ssr: false }
+);
 export default function SignInCard() {
   const methods = useForm({ defaultValues: { email: "", password: "" } });
   const {
@@ -99,7 +104,7 @@ export default function SignInCard() {
               boxShadow={"lg"}
               p={8}
             >
-              <Stack spacing={4}>
+              <Stack>
                 <FormControlField
                   name="email"
                   fieldName="Email address"
@@ -147,10 +152,11 @@ export default function SignInCard() {
                     {formError}
                   </Text>
                 )}
-                <Stack spacing={10} pt={2}>
+                <Stack spacing={5} pt={2}>
                   <SubmitButton>Sign In</SubmitButton>
                   <SignInWithGoogle />
                 </Stack>
+                <WalletOption />
                 <Stack pt={6}>
                   <Text align={"center"}>
                     Not a user?{" "}

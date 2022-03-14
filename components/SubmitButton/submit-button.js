@@ -8,7 +8,7 @@ export default function SubmitButton({
   return (
     <Button
       type="submit"
-      loadingText="Submitting"
+      //loadingText="Submitting"
       size="lg"
       bg={"blue.400"}
       color={"white"}

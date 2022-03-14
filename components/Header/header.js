@@ -13,9 +13,11 @@ import {
 } from "@chakra-ui/react";
 import CustomButton from "../CustomButton/CustomButton";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { useAccount } from "wagmi";
 
 const Header = () => {
   const { data: session } = useSession();
+  const [{ data: accountData }, disconnect] = useAccount();
   const [linearGradient] = useToken("bgGradient", ["linearGradient"]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
@@ -48,10 +50,20 @@ const Header = () => {
         mt={{ base: 4, md: 0 }}
       >
         <NextLink href="/" passHref>
-          <Link>Home</Link>
+          <Link
+            textAlign="center"
+            display={{ base: "block", sm: "block", md: "flex" }}
+          >
+            Home
+          </Link>
         </NextLink>
         <NextLink href="/blog" passHref>
-          <Link>Blog</Link>
+          <Link
+            textAlign="center"
+            display={{ base: "block", sm: "block", md: "flex" }}
+          >
+            Blog
+          </Link>
         </NextLink>
       </Stack>
 
@@ -73,6 +85,18 @@ const Header = () => {
               borderColor="black.500"
               variant="link"
               onClick={() => signOut()}
+              padding={{ base: isOpen ? "2" : "0", md: "0" }}
+            >
+              Sign out
+            </Button>
+          ) : accountData ? (
+            <Button
+              fontSize={"sm"}
+              fontWeight={{ base: isOpen ? 600 : "none", md: 400 }}
+              border={{ base: isOpen ? "2px" : "none", md: "none" }}
+              borderColor="black.500"
+              variant="link"
+              onClick={disconnect}
               padding={{ base: isOpen ? "2" : "0", md: "0" }}
             >
               Sign out

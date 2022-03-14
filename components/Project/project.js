@@ -16,7 +16,7 @@ import {
   rightFadeInVariant,
   leftFadeInVariant,
 } from "../../animation/animation";
-import { API_HOST } from "../../variable/globalVariable";
+
 export default function Project({ projectDatas }) {
   const MotionGrid = motion(Grid);
   const MotionGridItem = motion(GridItem);
