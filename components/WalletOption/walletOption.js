@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useConnect, useAccount, useNetwork } from "wagmi";
 import { useRouter } from "next/router";
 import { SiweMessage } from "siwe";
-import { Flex, Button, Box } from "@chakra-ui/react";
+import { Flex, Button, Box, Text } from "@chakra-ui/react";
 import Image from "next/image";
 export default function WalletOption() {
   const [state, setState] = useState({});
@@ -73,7 +73,9 @@ export default function WalletOption() {
         </Button>
       ))}
 
-      {error && <div>{error?.message ?? "Failed to connect"}</div>}
+      {error && (
+        <Text color="red">{error?.message ?? "Failed to connect"}</Text>
+      )}
     </Flex>
   );
 }

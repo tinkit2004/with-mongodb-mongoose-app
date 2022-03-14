@@ -41,7 +41,7 @@ export default function SignInCard() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [formError, setFormError] = useState("");
-  if (status === "authenticated") {
+  if (status === "authenticated" || accountData) {
     router.push("/");
   }
   const [showPassword, setShowPassword] = useState(false);
