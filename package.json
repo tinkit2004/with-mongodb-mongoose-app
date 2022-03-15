@@ -33,7 +33,7 @@
     "siwe": "^1.1.2",
     "swr": "^1.0.1",
     "typewriter-effect": "^2.18.2",
-    "wagmi": "^0.2.18"
+    "wagmi": "^0.2.21"
   },
   "devDependencies": {
     "typescript": "^4.6.2"
