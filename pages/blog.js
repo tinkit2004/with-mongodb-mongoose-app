@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import Layout from "../components/layout";
+
+import OrdinaryLayout from "../components/OrdinaryLayout";
 import AccessDenied from "../components/AccessDenied/access-denied";
 import { Box, Text } from "@chakra-ui/react";
 import { useAccount } from "wagmi";
@@ -28,9 +29,8 @@ export default function Page() {
   // If no session exists, display access denied message
   if (!session && !accountData) {
     return (
-      <Layout>
+      <OrdinaryLayout>
         <Box
-          h="55vh"
           margin="auto"
           display="flex"
           flexDirection="column"
@@ -39,15 +39,14 @@ export default function Page() {
         >
           <AccessDenied />
         </Box>
-      </Layout>
+      </OrdinaryLayout>
     );
   }
 
   // If session exists, display content
   return (
-    <Layout>
+    <OrdinaryLayout>
       <Box
-        h="55vh"
         margin="auto"
         display="flex"
         flexDirection="column"
@@ -63,6 +62,6 @@ export default function Page() {
           <strong>{content || "\u00a0"}</strong>
         </p>
       </Box>
-    </Layout>
+    </OrdinaryLayout>
   );
 }

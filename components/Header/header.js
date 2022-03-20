@@ -70,7 +70,7 @@ const Header = () => {
       <Box
         display={{ base: isOpen ? "block" : "none", md: "block" }}
         mt={{ base: 4, md: 0 }}
-        w={{ base: isOpen ? "100%" : "0", md: "20%" }}
+        w={{ base: isOpen ? "100%" : "0", md: "auto" }}
       >
         <Stack
           direction={{ base: "column", md: "row" }}

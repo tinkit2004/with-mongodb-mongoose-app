@@ -6,9 +6,7 @@ export default function Layout({ children }) {
   return (
     <>
       <Header />
-      <VStack>
-        <main>{children}</main>
-      </VStack>
+      <VStack as="main">{children}</VStack>
       <Footer />
     </>
   );
