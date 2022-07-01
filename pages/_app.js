@@ -1,5 +1,6 @@
 import "../css/style.css";
 import "../css/form.css";
+import React from "react";
 //Next-auth setup
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
