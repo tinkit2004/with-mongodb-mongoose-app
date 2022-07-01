@@ -1,0 +1,19 @@
+{
+  "configurations": [
+    {
+      "type": "aws-sam",
+      "request": "direct-invoke",
+      "name": "with-mongodb-mongoose-app:pages/api/wordle.wordleHandler (nodejs16.x)",
+      "invokeTarget": {
+        "target": "code",
+        "projectRoot": "${workspaceFolder}/",
+        "lambdaHandler": "pages/api/wordle.wordleHandler"
+      },
+      "lambda": {
+        "runtime": "nodejs16.x",
+        "payload": {},
+        "environmentVariables": {}
+      }
+    }
+  ]
+}

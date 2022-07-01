@@ -1,6 +1,6 @@
 import Link from "next/link";
 import dbConnect from "../lib/dbConnect";
-import ProjectData from "../models/Project";
+import ProjectData from "../models/ProjectModel";
 import Project from "../components/Project/project";
 import Layout from "../components/layout";
 import Contact from "../components/Contact/contact";

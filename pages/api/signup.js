@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-import User from "../../models/User";
+import User from "../../models/UserModel";
 import dbConnect from "../../lib/dbConnect";
 export default async function handler(req, res) {
   const { email, password, lastName, name } = req.body;
@@ -35,26 +35,6 @@ export default async function handler(req, res) {
             lastName: user.lastName,
           });
         }
-        // User.findOne({ email: email }).then((foundUser) => {
-        //   if (foundUser) {
-        //     return res.status(400).json({ email: "This user already exist" });
-        //   } else {
-        //     bcrypt.hash(password, saltRounds, (err, hash) => {
-        //       // Store hash in your password DB.
-        //       const user = User.create({
-        //         name: name,
-        //         email: email,
-        //         password: hash,
-        //         lastName: lastName,
-        //       });
-        //       res.status(200).json({
-        //         success: true,
-        //         data: { name: name, email: email, lastName: lastName },
-        //       });
-        //     });
-        //     /* create a new model in the database */
-        //   }
-        // });
       } catch (error) {
         console.log(error);
         res.status(400).json({ success: false });

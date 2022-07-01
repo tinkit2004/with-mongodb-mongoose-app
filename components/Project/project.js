@@ -44,12 +44,14 @@ export default function Project({ projectDatas }) {
               initial="hidden"
               whileInView="visible"
               mb={[16, 24]}
+              gap={[0, 6]}
             >
               <MotionGridItem
                 colSpan={[12, 12, 4]}
                 variants={isLargerThanMd ? rightFadeInVariant : topVariant}
                 mb={4}
-                mr={[0, 10]}
+
+                //mr={[0, 10]}
               >
                 <Stack align={["center", "center", "start"]}>
                   <Text as="h3" fontSize={["xl", "2xl"]} fontWeight="500">

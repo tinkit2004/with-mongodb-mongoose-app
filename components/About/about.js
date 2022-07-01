@@ -6,7 +6,6 @@ import { jsx } from "@emotion/react";
 import { mq } from "../../theme/index";
 import Title from "../Title/title";
 
-import profileTemplate from "../../public/profile_template.jpg";
 import ImagePic from "../ImagePic/ImagePic";
 import ProfileDescription from "../ProfileDescription/ProfileDescription";
 import CustomButton from "../CustomButton/CustomButton";
@@ -54,7 +53,7 @@ export default function About() {
         <MotionVStack
           variants={rightFadeInVariant}
           align={["center", "center", "start"]}
-          p={5}
+          p={[7, 5]}
         >
           <ProfileDescription mb={[4, 2, 0]} />
           <CustomButton

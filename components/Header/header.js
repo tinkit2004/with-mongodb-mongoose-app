@@ -14,6 +14,7 @@ import {
 import CustomButton from "../CustomButton/CustomButton";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { useAccount } from "wagmi";
+import { Image } from "@chakra-ui/react";
 
 const Header = () => {
   const { data: session } = useSession();
@@ -33,10 +34,15 @@ const Header = () => {
       bg="white"
       color="black"
     >
-      <Flex align="center" mr={5}>
-        <Heading as="h1" size="lg" letterSpacing={"tighter"}>
+      <Flex align="center" mr={5} flexShrink={0}>
+        {/* <Heading as="h1" size="lg" letterSpacing={"tighter"}>
           Andy's Blog
-        </Heading>
+        </Heading> */}
+        <Image
+          src="/Andy_tech_blog_logo.png"
+          objectFit="cover"
+          boxSize="100px"
+        />
       </Flex>
       <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
         <HamburgerIcon />
@@ -63,6 +69,14 @@ const Header = () => {
             display={{ base: "block", sm: "block", md: "flex" }}
           >
             Blog
+          </Link>
+        </NextLink>
+        <NextLink href="/Wordle" passHref>
+          <Link
+            textAlign="center"
+            display={{ base: "block", sm: "block", md: "flex" }}
+          >
+            Wordle
           </Link>
         </NextLink>
       </Stack>
