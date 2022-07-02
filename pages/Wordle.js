@@ -5,7 +5,7 @@ function WordlePage() {
   const [solution, setSolution] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/wordle")
+    fetch("/api/wordle")
       .then((res) => res.json())
       .then((json) => {
         // random int between 0 & 14
