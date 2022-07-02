@@ -3,8 +3,7 @@ import "../css/form.css";
 import React from "react";
 //Next-auth setup
 import { SessionProvider } from "next-auth/react";
-import Head from "next/head";
-import Link from "next/link";
+
 //Chakra UI setup
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "../theme";
@@ -20,6 +19,7 @@ config.autoAddCss = false;
 //redux setup
 import { store } from "../redux/store";
 import { Provider } from "react-redux";
+import { AppProps } from "next/app";
 
 // API key for Ethereum node
 // Two popular services are Infura (infura.io) and Alchemy (alchemy.com)
@@ -53,7 +53,7 @@ const connectors = ({ chainId }) => {
   ];
 };
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <Provider store={store}>
       <WalletProvider autoConnect connectors={connectors}>

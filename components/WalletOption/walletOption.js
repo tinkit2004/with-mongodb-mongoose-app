@@ -1,11 +1,12 @@
 import React from "react";
 import { useState } from "react";
-import { useConnect, useAccount, useNetwork } from "wagmi";
+import { useConnect } from "wagmi";
 import { useRouter } from "next/router";
 import { SiweMessage } from "siwe";
 import { Flex, Button, Box, Text } from "@chakra-ui/react";
 import Image from "next/image";
 export default function WalletOption() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, setState] = useState({});
   const [{ data, error }, connect] = useConnect();
   const router = useRouter();

@@ -1,8 +1,7 @@
-import Link from "next/link";
 import React from "react";
 import { animateScroll as scroll } from "react-scroll";
 import { ChevronUpIcon } from "@chakra-ui/icons";
-import { Box, useToken, Text, Flex, Icon } from "@chakra-ui/react";
+import { Box, useToken, Text, Flex } from "@chakra-ui/react";
 import styles from "./footer.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithubSquare, faLinkedin } from "@fortawesome/free-brands-svg-icons";

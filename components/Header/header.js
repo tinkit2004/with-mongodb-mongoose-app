@@ -4,7 +4,6 @@ import React from "react";
 import {
   Box,
   Stack,
-  Heading,
   Flex,
   Button,
   Link,
@@ -29,20 +28,23 @@ const Header = () => {
       align="center"
       justify="space-between"
       wrap="wrap"
-      h="10vh"
-      padding={10}
+      px={10}
       bg="white"
       color="black"
+      my={4}
     >
       <Flex align="center" mr={5} flexShrink={0}>
         {/* <Heading as="h1" size="lg" letterSpacing={"tighter"}>
           Andy's Blog
         </Heading> */}
-        <Image
-          src="/Andy_tech_blog_logo.png"
-          objectFit="cover"
-          boxSize="100px"
-        />
+        <NextLink href="/">
+          <Image
+            src="/Andy_tech_blog_logo.png"
+            fit="cover"
+            w={["200px", "150px"]}
+            alt="Anyd's tech blog"
+          />
+        </NextLink>
       </Flex>
       <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
         <HamburgerIcon />

@@ -16,8 +16,17 @@ import {
   rightFadeInVariant,
   leftFadeInVariant,
 } from "../../animation/animation";
-
-export default function Project({ projectDatas }) {
+import { ObjectId } from "mongodb";
+export default function Project({
+  projectDatas,
+}: {
+  projectDatas: {
+    _id: ObjectId;
+    projectTitle: string;
+    projectDescription: string;
+    projectImageUrl: string;
+  }[];
+}) {
   const MotionGrid = motion(Grid);
   const MotionGridItem = motion(GridItem);
   const [isLargerThanMd] = useMediaQuery(md);
@@ -33,12 +42,12 @@ export default function Project({ projectDatas }) {
         >
           Projects
         </Title>
-        {projectDatas.map((projectData) => {
-          const { _id, projectTitle, projectDescription, projectImageUrl } =
+        {projectDatas.map((projectData, i) => {
+          const { projectTitle, projectDescription, projectImageUrl } =
             projectData;
           return (
             <MotionGrid
-              key={_id}
+              key={i}
               templateColumns="repeat(12, 1fr)"
               variants={topVariant}
               initial="hidden"
@@ -66,8 +75,8 @@ export default function Project({ projectDatas }) {
                 colSpan={[12, 12, 8]}
                 variants={isLargerThanMd ? leftFadeInVariant : topVariant}
               >
-                <Box w="100%" align="center">
-                  <ImagePic imagePic={projectImageUrl || ""} maxW="100%" />
+                <Box w="100%">
+                  <ImagePic imagePic={projectImageUrl || ""} />
                 </Box>
               </MotionGridItem>
             </MotionGrid>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex } from "@chakra-ui/react";
 import WordleSquare from "../WordleSquare/wordleSquare";
-import { Box } from "@chakra-ui/react";
+
 import styles from "../WordleSquare/WordleSquare.module.css";
 export default function WordleRow({ guess, currentGuess }) {
   if (guess) {

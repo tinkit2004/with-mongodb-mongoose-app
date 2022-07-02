@@ -2,7 +2,7 @@
 import React from "react";
 import { Box, VStack, SimpleGrid } from "@chakra-ui/react";
 import { useToken } from "@chakra-ui/react";
-import { jsx } from "@emotion/react";
+
 import { mq } from "../../theme/index";
 import Title from "../Title/title";
 
@@ -42,7 +42,7 @@ export default function About() {
         About Me
       </Title>
       <MotionSimpleGrid
-        columns={[1, , 2]}
+        columns={[1, 2]}
         variants={topVariant}
         initial="hidden"
         whileInView="visible"

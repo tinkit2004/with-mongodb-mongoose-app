@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
 const saltRounds = 10;
 import User from "../../models/UserModel";
 import dbConnect from "../../lib/dbConnect";

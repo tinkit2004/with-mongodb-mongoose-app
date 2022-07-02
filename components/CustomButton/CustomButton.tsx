@@ -5,13 +5,18 @@ const MotionButton = motion(Button);
 
 export default function CustomButton({
   children,
-
   buttonHoverColor,
   buttonHoverBrightness,
   textHoverColor,
   textHoverGradientColor,
 
   ...otherProps
+}: {
+  children: React.ReactNode;
+  buttonHoverColor: string;
+  buttonHoverBrightness: string;
+  textHoverColor: string;
+  textHoverGradientColor: string;
 }) {
   return (
     <MotionButton

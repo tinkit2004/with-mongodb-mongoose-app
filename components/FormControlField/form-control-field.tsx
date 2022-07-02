@@ -13,6 +13,11 @@ const FormControlField = ({
   type,
   validation,
   ...otherProps
+}: {
+  name: string;
+  fieldName: string;
+  type: string;
+  validation: object;
 }) => {
   const {
     formState: { errors },

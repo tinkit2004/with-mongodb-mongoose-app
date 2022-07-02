@@ -39,7 +39,7 @@ export default function SignInCard() {
     reset,
   } = methods;
 
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [{ data: accountData }] = useAccount();
   const router = useRouter();
   const [formError, setFormError] = useState("");
@@ -64,7 +64,7 @@ export default function SignInCard() {
   //   });
   //   //console.log(signUpInfo);
   // };
-  const handleOnSubmit = async (data, event) => {
+  const handleOnSubmit = async (data) => {
     const { email, password } = data;
     //console.log(data);
     setFormError("");
@@ -73,7 +73,7 @@ export default function SignInCard() {
       email: email,
       password: password,
     });
-    const { error, status, ok, url } = signInData;
+    const { error, url } = signInData;
     console.log(error);
     setFormError(error);
     if (url != null) {
@@ -162,7 +162,7 @@ export default function SignInCard() {
                 <Stack pt={6}>
                   <Text align={"center"}>
                     Not a user?{" "}
-                    <NextLink href="/signup" passHref>
+                    <NextLink href="/auth/signup" passHref>
                       <Link color={"blue.400"}>Sign Up</Link>
                     </NextLink>
                   </Text>

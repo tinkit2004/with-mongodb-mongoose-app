@@ -1,7 +1,6 @@
 import User from "../../models/UserModel";
 import dbConnect from "../../lib/dbConnect";
-
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
 export default async function handler(req, res) {
   const { email, password } = req.body;
   await dbConnect();

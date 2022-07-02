@@ -56,7 +56,7 @@ export default function Page() {
         <Text as="h1" fontSize="xl">
           Protected Page
         </Text>
-        <Text>You are now signed in using </Text>
+        {accountData && <Text>You are now signed in using </Text>}
         {accountData && <p>{accountData.address}</p>}
         <p>
           <strong>{content || "\u00a0"}</strong>

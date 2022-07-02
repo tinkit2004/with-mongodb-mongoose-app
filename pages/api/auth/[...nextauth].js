@@ -46,7 +46,7 @@ export default NextAuth({
           throw new Error(user.error);
         }
         // Return null if user data could not be retrieved
-        return null;
+        //return null;
       },
     }),
     CredentialsProvider({
@@ -87,7 +87,7 @@ export default NextAuth({
           throw new Error(user.error);
         }
         // Return null if user data could not be retrieved
-        return null;
+        //return null;
       },
     }),
     // ...add more providers here
@@ -138,7 +138,7 @@ export default NextAuth({
   // when an action is performed.
   // https://next-auth.js.org/configuration/callbacks
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn({ user }) {
       //console.log(user);
       if (user) {
         return true;
@@ -146,7 +146,7 @@ export default NextAuth({
         return false;
       }
     },
-    async redirect({ url, baseUrl }) {
+    async redirect({ baseUrl }) {
       return baseUrl;
     },
     // redirect({ url, baseUrl }) {
@@ -155,13 +155,13 @@ export default NextAuth({
     //   else if (url.startsWith("/")) return new URL(url, baseUrl).toString();
     //   return baseUrl;
     // },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       session.accessToken = token.accessToken;
       session.user = token.user;
 
       return session;
     },
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async jwt({ token, user, account }) {
       user && (token.user = user);
       if (account) {
         token.accessToken = account.access_token;

@@ -34,6 +34,7 @@ const WalletOption = dynamic(
 export default function SignUpCard() {
   const [{ data: accountData }] = useAccount();
   //Get the connected wallet info on page load like the address
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, setState] = useState({});
   useEffect(() => {
     const handler = async () => {
@@ -62,7 +63,7 @@ export default function SignUpCard() {
     formState: { errors },
     reset,
   } = methods;
-  const { data: session, status } = useSession();
+  const {  status } = useSession();
   const router = useRouter();
   const [formError, setFormError] = useState("");
 
@@ -71,7 +72,7 @@ export default function SignUpCard() {
     router.push("/");
   }
 
-  const handleOnSubmit = async (data, event) => {
+  const handleOnSubmit = async (data) => {
     const { email, firstName, lastName, password } = data;
     setFormError("");
     try {
@@ -82,7 +83,7 @@ export default function SignUpCard() {
         lastName: lastName,
         password: password,
       });
-      const { error, status, ok, url } = signUpData;
+      const { error, url } = signUpData;
       setFormError(error);
       if (url != null) {
         router.push(url);

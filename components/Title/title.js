@@ -2,7 +2,7 @@ import React from "react";
 import { Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 const MotionTitle = motion(Text);
-export default function Title({ title, variants, children, ...otherProps }) {
+export default function Title({ variants, children, ...otherProps }) {
   return (
     <MotionTitle
       align="center"

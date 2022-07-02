@@ -1,5 +1,5 @@
 import React from "react";
-import { useDisclosure } from "@chakra-ui/react";
+
 import {
   Modal,
   ModalOverlay,
@@ -15,7 +15,6 @@ export default function WordleModal({
   closeModal,
   showModal,
 }) {
-  const { isOpen } = useDisclosure();
   return (
     <>
       {isCorrect && (
@@ -25,20 +24,20 @@ export default function WordleModal({
             <ModalHeader textAlign="center">Congratulations!!!</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <h1>{solution}</h1>
+              <h1>The solution is {solution}</h1>
               <p>You found the solution in {turn} guesses :)</p>
             </ModalBody>
           </ModalContent>
         </Modal>
       )}
       {!isCorrect && (
-        <Modal>
+        <Modal isOpen={showModal} onClose={closeModal}>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader textAlign="center">Nevermind</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <h1>{solution}</h1>
+              <h1>The solution is {solution}</h1>
               <p>Try again :)</p>
             </ModalBody>
           </ModalContent>

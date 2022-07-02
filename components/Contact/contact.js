@@ -1,5 +1,5 @@
 import React from "react";
-import { useToken, Text, Box, VStack } from "@chakra-ui/react";
+import { useToken, Text, Box } from "@chakra-ui/react";
 import { mq } from "../../theme";
 import Title from "../Title/title";
 import { topVariant } from "../../animation/animation";
