@@ -9,7 +9,7 @@ export default function Keypad({
   const [letters, setLetters] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/keypad")
+    fetch("/api/keypad")
       .then((res) => res.json())
       .then((json) => {
         setLetters(json);
