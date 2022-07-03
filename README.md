@@ -1,8 +1,6 @@
-# MongoDB and Mongoose with Next.js
+# Portfolio website built with Next.js, MongoDB, Mongoose
 
-This example shows how you can use a MongoDB database to support your Next.js application.
-
-**Pet** is an application that allows users to add their pets' information (e.g., name, owner's name, diet, age, dislikes, likes, and photo). They can also delete it or edit it anytime.
+This portfolio website is made by Andy Fung to demonstrate his ability to develop a web app. Social login function, email login function, web3 connection function, and API connection function are included in this portfolio website
 
 ## Deploy your own
 
