@@ -29,15 +29,21 @@ export default function Contact() {
       })}
     >
       <MotionBox variants={topVariant} initial="hidden" whileInView="visible">
-        <Title align="center" mt={[0, 0, 4]} color="white">
+        <Title
+          align="center"
+          mt={[0, 0, 4]}
+          color="white"
+          fontSize={["md", "lg"]}
+        >
           Contact
         </Title>
         <MotionBox variants={topVariant}>
-          <Text align="center" fontSize={["md", "2xl"]} mb={[8, 6]}>
+          <Text align="center" fontSize={["sm", "md"]} mb={[8, 6]}>
             Would you like to work with me? Awesome!
           </Text>
           <CustomButton
-            size="lg"
+            p={["3", "6"]}
+            fontSize={["xs", "sm"]}
             textHoverGradientColor={linearGradient}
             buttonHoverColor="white"
             as="a"

@@ -39,6 +39,7 @@ export default function Project({
           mt={[4, 4, 0]}
           initial="hidden"
           whileInView="visible"
+          fontSize={["md", "lg"]}
         >
           Projects
         </Title>
@@ -63,7 +64,7 @@ export default function Project({
                 //mr={[0, 10]}
               >
                 <Stack align={["center", "center", "start"]}>
-                  <Text as="h3" fontSize={["xl", "2xl"]} fontWeight="500">
+                  <Text as="h3" fontSize={["sm", "md"]} fontWeight="500">
                     {projectTitle || ""}
                   </Text>
                   <Text align={["center", "center", "start"]}>

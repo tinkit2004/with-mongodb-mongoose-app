@@ -12,8 +12,8 @@ export default function Hero() {
           Andy
         </Text>
       </Text>
-      <Flex>
-        <Text fontSize="lg" mr={2}>
+      <Flex flexDirection={["column", "row"]}>
+        <Text fontSize="lg" mr={2} textAlign={["center", "start"]}>
           I'm a
         </Text>
         <Text as="span" fontSize="lg" fontWeight={700}>

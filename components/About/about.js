@@ -38,7 +38,12 @@ export default function About() {
         ],
       })}
     >
-      <Title variants={topVariant} initial="hidden" whileInView="visible">
+      <Title
+        fontSize={["md", "lg"]}
+        variants={topVariant}
+        initial="hidden"
+        whileInView="visible"
+      >
         About Me
       </Title>
       <MotionSimpleGrid
@@ -57,6 +62,7 @@ export default function About() {
         >
           <ProfileDescription mb={[4, 2, 0]} />
           <CustomButton
+            fontSize="xs"
             textHoverGradientColor={linearGradient}
             buttonHoverColor="white"
             as="a"

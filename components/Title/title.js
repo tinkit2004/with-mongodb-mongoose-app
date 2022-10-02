@@ -6,7 +6,6 @@ export default function Title({ variants, children, ...otherProps }) {
   return (
     <MotionTitle
       align="center"
-      fontSize={["3xl", "5xl"]}
       fontWeight="bold"
       textTransform="uppercase"
       pb={10}

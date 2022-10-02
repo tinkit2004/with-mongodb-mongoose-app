@@ -19,7 +19,7 @@ const Index = ({
   }[];
 }) => (
   <>
-    <Layout>
+    <Layout title="Home">
       <Hero />
       <About />
       <Project projectDatas={projectDatas} />
