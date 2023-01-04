@@ -60,6 +60,7 @@ export default function WalletOption() {
           disabled={!connector.ready}
           key={connector.id}
           onClick={() => signInwithWallet(connector)}
+          mt={"20px"}
         >
           <Box mx={2}>
             <Image
