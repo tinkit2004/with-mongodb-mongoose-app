@@ -9,6 +9,7 @@ export default function SignInWithGoogle() {
       leftIcon={<Icon as={FcGoogle} />}
       size="lg"
       onClick={() => signIn("google")}
+      fontSize="sm"
     >
       Sign in with Google
     </Button>

@@ -63,7 +63,7 @@ export default function SignUpCard() {
     formState: { errors },
     reset,
   } = methods;
-  const {  status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const [formError, setFormError] = useState("");
 
@@ -117,7 +117,7 @@ export default function SignUpCard() {
               boxShadow={"lg"}
               p={8}
             >
-              <Stack>
+              <Flex flexDirection="column">
                 <HStack>
                   <Box>
                     <FormControlField
@@ -201,7 +201,7 @@ export default function SignUpCard() {
                     </NextLink>
                   </Text>
                 </Stack>
-              </Stack>
+              </Flex>
             </Box>
           </Stack>
         </Flex>

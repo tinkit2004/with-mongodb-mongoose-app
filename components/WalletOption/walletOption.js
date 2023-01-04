@@ -55,8 +55,8 @@ export default function WalletOption() {
     <Flex flexDirection="column">
       {data.connectors.map((connector) => (
         <Button
-          mt={5}
           size="lg"
+          fontSize="sm"
           disabled={!connector.ready}
           key={connector.id}
           onClick={() => signInwithWallet(connector)}

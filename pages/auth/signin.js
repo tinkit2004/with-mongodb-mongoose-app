@@ -106,7 +106,7 @@ export default function SignInCard() {
               boxShadow={"lg"}
               p={8}
             >
-              <Stack>
+              <Flex flexDirection="column">
                 <FormControlField
                   name="email"
                   fieldName="Email address"
@@ -154,7 +154,7 @@ export default function SignInCard() {
                     {formError}
                   </Text>
                 )}
-                <Stack spacing={5} pt={2}>
+                <Stack spacing={5}>
                   <SubmitButton>Sign In</SubmitButton>
                   <SignInWithGoogle />
                 </Stack>
@@ -167,7 +167,7 @@ export default function SignInCard() {
                     </NextLink>
                   </Text>
                 </Stack>
-              </Stack>
+              </Flex>
             </Box>
           </Stack>
         </Flex>

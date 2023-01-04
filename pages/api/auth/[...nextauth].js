@@ -31,7 +31,7 @@ export default NextAuth({
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
         const { email, password } = req.body;
-        const res = await fetch("http://localhost:3000/api/signin", {
+        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/signin`, {
           method: "POST",
           body: JSON.stringify({ email: email, password: password }),
           headers: { "Content-Type": "application/json" },
@@ -67,7 +67,7 @@ export default NextAuth({
       },
       async authorize(credentials, req) {
         const { email, password, name, lastName } = req.body;
-        const res = await fetch("http://localhost:3000/api/signup", {
+        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/signup`, {
           method: "POST",
           body: JSON.stringify({
             email: email,

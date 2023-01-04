@@ -10,6 +10,7 @@ export default function SubmitButton({
       type="submit"
       //loadingText="Submitting"
       size="lg"
+      fontSize="sm"
       bg={"blue.400"}
       color={"white"}
       _hover={{
