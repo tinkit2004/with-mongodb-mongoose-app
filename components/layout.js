@@ -2,7 +2,6 @@ import Header from "./Header/header";
 import Footer from "./Footer/footer";
 import { VStack } from "@chakra-ui/react";
 import Head from "next/head";
-
 export default function Layout({ children, title }) {
   return (
     <>

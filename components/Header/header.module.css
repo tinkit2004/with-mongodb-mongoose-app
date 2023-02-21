@@ -1,10 +1,10 @@
 /* Set min-height to avoid page reflow while session loading */
-.signedInStatus {
+/* .signedInStatus {
   display: block;
   min-height: 4rem;
   width: 100%;
-}
-
+} */
+/* 
 .loading,
 .loaded {
   position: relative;
@@ -89,4 +89,4 @@
 .navItem {
   display: inline-block;
   margin-right: 1rem;
-}
+} */

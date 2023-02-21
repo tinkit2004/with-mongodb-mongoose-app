@@ -1,11 +1,23 @@
 import React from "react";
-import { Text, Stack, Flex } from "@chakra-ui/react";
+import { Text, Stack, Flex, Image } from "@chakra-ui/react";
 import Typewriter from "typewriter-effect";
 import { useToken } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/store";
 export default function Hero() {
   const [linearGradient] = useToken("bgGradient", ["linearGradient"]);
+  const headerHeight = useSelector(
+    (state: RootState) => state.header.headerHeight
+  );
+  const contentHeight = `calc(100vh - ${headerHeight}px)`;
   return (
-    <Stack align="center" h="90vh" justify="center">
+    <Stack align="center" justify="center" h={contentHeight}>
+      <Image
+        borderRadius="full"
+        boxSize="150px"
+        src="/propic.png"
+        alt="Dan Abramov"
+      />
       <Text fontSize="6xl" fontWeight="700">
         {"Hi I'm" + " "}
         <Text as="span" bgGradient={linearGradient} bgClip="text">

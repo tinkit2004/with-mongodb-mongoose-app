@@ -14,6 +14,9 @@ import CustomButton from "../CustomButton/CustomButton";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { useAccount } from "wagmi";
 import { Image } from "@chakra-ui/react";
+import { useRef, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setHeaderHeight } from "../../features/header/headerSlice";
 
 const Header = () => {
   const { data: session } = useSession();
@@ -21,6 +24,13 @@ const Header = () => {
   const [linearGradient] = useToken("bgGradient", ["linearGradient"]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
+  const headerRef = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (headerRef.current) {
+      dispatch(setHeaderHeight(headerRef.current.clientHeight));
+    }
+  }, []);
 
   return (
     <Flex
@@ -32,6 +42,8 @@ const Header = () => {
       bg="white"
       color="black"
       my={4}
+      minH={"100px"}
+      ref={headerRef}
     >
       <Flex align="center" mr={5} flexShrink={0}>
         {/* <Heading as="h1" size="lg" letterSpacing={"tighter"}>
@@ -140,6 +152,7 @@ const Header = () => {
             buttonHoverColor={linearGradient}
             buttonHoverBrightness="95%"
             textHoverColor="white"
+            textHoverGradientColor=""
             bg={linearGradient}
           >
             Create account

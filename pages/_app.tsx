@@ -3,7 +3,6 @@ import "../css/form.css";
 import React from "react";
 //Next-auth setup
 import { SessionProvider } from "next-auth/react";
-
 //Chakra UI setup
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "../theme";
