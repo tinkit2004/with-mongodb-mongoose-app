@@ -9,7 +9,7 @@ export default function Hero() {
   const headerHeight = useSelector(
     (state: RootState) => state.header.headerHeight
   );
-  const contentHeight = `calc(100vh - ${headerHeight}px)`;
+  const contentHeight = `calc((100vh - 32px) - ${headerHeight}px)`;
   return (
     <Stack align="center" justify="center" h={contentHeight}>
       <Image
