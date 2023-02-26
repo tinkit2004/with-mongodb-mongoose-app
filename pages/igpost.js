@@ -1,7 +1,7 @@
 import React from "react";
 import Script from "next/script";
 import Layout from "../components/layout";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 export default function Igpost() {
   return (
     <Layout>

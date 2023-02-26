@@ -11,7 +11,6 @@ export default function Footer() {
     <Box
       padding={10}
       bg={darkGrey}
-      h="100%"
       px={[5, 20, 30, 60]}
       justifyContent="center"
       display="flex"

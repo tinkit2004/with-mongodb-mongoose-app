@@ -18,8 +18,8 @@ config.autoAddCss = false;
 //redux setup
 import { store } from "../redux/store";
 import { Provider } from "react-redux";
-import { AppProps } from "next/app";
-
+import type { AppProps } from "next/app";
+import type { Session } from "next-auth";
 // API key for Ethereum node
 // Two popular services are Infura (infura.io) and Alchemy (alchemy.com)
 const infuraId = process.env.INFURA_ID;
@@ -52,7 +52,10 @@ const connectors = ({ chainId }) => {
   ];
 };
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps<{ session: Session }>) {
   return (
     <Provider store={store}>
       <WalletProvider autoConnect connectors={connectors}>
