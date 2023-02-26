@@ -1,17 +1,11 @@
 import dbConnect from "../lib/dbConnect";
-import ProjectData from "../models/ProjectModel";
+import { ProjectData, ProjectInterface } from "../models/ProjectModel";
 import Project from "../components/Project/project";
 import Layout from "../components/layout";
 import Contact from "../components/Contact/contact";
 import About from "../components/About/about";
 import dynamic from "next/dynamic";
 import { GetStaticProps } from "next";
-interface Project {
-  _id: string;
-  projectTitle: string;
-  projectDescription: string;
-  projectImageUrl: string;
-}
 
 interface ProjectsProps {
   projects: Project[];
