@@ -16,12 +16,11 @@ import {
   rightFadeInVariant,
   leftFadeInVariant,
 } from "../../animation/animation";
-import { ObjectId } from "mongodb";
 export default function Project({
-  projectDatas,
+  projects,
 }: {
-  projectDatas: {
-    _id: ObjectId;
+  projects: {
+    _id: string;
     projectTitle: string;
     projectDescription: string;
     projectImageUrl: string;
@@ -43,12 +42,12 @@ export default function Project({
         >
           Projects
         </Title>
-        {projectDatas.map((projectData, i) => {
-          const { projectTitle, projectDescription, projectImageUrl } =
+        {projects.map((projectData) => {
+          const { _id, projectTitle, projectDescription, projectImageUrl } =
             projectData;
           return (
             <MotionGrid
-              key={i}
+              key={_id}
               templateColumns="repeat(12, 1fr)"
               variants={topVariant}
               initial="hidden"
