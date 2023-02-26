@@ -20,7 +20,8 @@
     "**/*.ts",
     "**/*.tsx",
     "additional.d.ts",
-    "pages/api/signin.js"
+    "pages/api/signin.js",
+    "pages/ighashtag.js"
   ],
   "exclude": ["node_modules"]
 }
