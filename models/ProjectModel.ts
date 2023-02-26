@@ -7,11 +7,12 @@ export interface ProjectInterface {
 }
 
 const { Schema } = mongoose;
-const ProjectDataSchema = new Schema({
+const ProjectDataSchema = new Schema<ProjectInterface>({
   projectTitle: String,
   projectDescription: String,
   projectImageUrl: String,
 });
-export const ProjectData =
-  mongoose.models.ProjectData ||
-  mongoose.model("ProjectData", ProjectDataSchema);
+export const ProjectData = mongoose.model<ProjectInterface>(
+  "ProjectData",
+  ProjectDataSchema
+);

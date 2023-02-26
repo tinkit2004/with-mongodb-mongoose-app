@@ -22,7 +22,7 @@ const Index = ({ projects }: ProjectsProps) => (
   </>
 );
 /* Retrieves pet(s) data from mongodb database */
-export const getServerSideProps: GetStaticProps = async () => {
+export const getServerSideProps: GetStaticProps<ProjectsProps> = async () => {
   try {
     await dbConnect();
     const projects = await ProjectData.find({}).lean();
