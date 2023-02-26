@@ -8,7 +8,7 @@ import dynamic from "next/dynamic";
 import { GetStaticProps } from "next";
 
 interface ProjectsProps {
-  projects: Project[];
+  projects: ProjectInterface[];
 }
 const Hero = dynamic(() => import("../components/Hero/hero"), { ssr: false });
 const Index = ({ projects }: ProjectsProps) => (
