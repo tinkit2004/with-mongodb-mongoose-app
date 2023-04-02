@@ -12,7 +12,6 @@ const ProjectDataSchema = new Schema<ProjectInterface>({
   projectDescription: String,
   projectImageUrl: String,
 });
-export const ProjectData = mongoose.model<ProjectInterface>(
-  "ProjectData",
-  ProjectDataSchema
-);
+export const ProjectData =
+  (mongoose.models.ProjectData as mongoose.Model<ProjectInterface>) ||
+  mongoose.model<ProjectInterface>("ProjectData", ProjectDataSchema);

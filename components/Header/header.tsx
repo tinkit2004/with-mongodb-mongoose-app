@@ -132,31 +132,36 @@ const Header = () => {
               Sign out
             </Button>
           ) : (
-            <Button
-              fontSize="2xs"
-              fontWeight={{ base: isOpen ? 600 : "none", md: 400 }}
-              border={{ base: isOpen ? "2px" : "none", md: "none" }}
-              borderColor="black.500"
-              variant="link"
-              onClick={() => signIn()}
-              padding={{ base: isOpen ? "2" : "0", md: "0" }}
+            <Stack
+              direction={{ base: "column", md: "row" }}
+              spacing={{ base: 3, md: 6 }}
+              justify="center"
             >
-              Sign In
-            </Button>
+              <Button
+                fontSize="2xs"
+                fontWeight={{ base: isOpen ? 600 : "none", md: 400 }}
+                border={{ base: isOpen ? "2px" : "none", md: "none" }}
+                borderColor="black.500"
+                variant="link"
+                onClick={() => signIn()}
+                padding={{ base: isOpen ? "2" : "0", md: "0" }}
+              >
+                Sign In
+              </Button>
+              <CustomButton
+                fontSize="2xs"
+                as="a"
+                href="/auth/signup"
+                buttonHoverColor={linearGradient}
+                buttonHoverBrightness="95%"
+                textHoverColor="white"
+                textHoverGradientColor=""
+                bg={linearGradient}
+              >
+                Create account
+              </CustomButton>
+            </Stack>
           )}
-
-          <CustomButton
-            fontSize="2xs"
-            as="a"
-            href="/auth/signup"
-            buttonHoverColor={linearGradient}
-            buttonHoverBrightness="95%"
-            textHoverColor="white"
-            textHoverGradientColor=""
-            bg={linearGradient}
-          >
-            Create account
-          </CustomButton>
         </Stack>
       </Box>
     </Flex>
