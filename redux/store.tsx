@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import headerReducer from "../features/header/headerSlice";
+import authTypeReducer from "../features/authType/authTypeSlice";
 export const store = configureStore({
   reducer: {
     header: headerReducer,
+    authType: authTypeReducer,
   },
 });
 

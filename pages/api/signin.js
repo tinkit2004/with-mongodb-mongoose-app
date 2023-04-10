@@ -10,7 +10,7 @@ export default async function handler(req, res) {
       try {
         // Check if user input email and password
         if (!email || !password) {
-          return res.status(400).json({ success: false, error: "empty" });
+          return res.status(400).json({ error: "empty" });
         }
         const foundUser = await User.findOne({ email: email }).exec();
         // Check if any user found
@@ -18,19 +18,16 @@ export default async function handler(req, res) {
           const match = await bcrypt.compare(password, foundUser.password);
           if (match) {
             return res.status(200).json({
-              success: true,
               _id: foundUser._id,
               name: foundUser.name,
               image: foundUser.image,
               email: foundUser.email,
             });
           } else {
-            return res
-              .status(400)
-              .json({ success: false, error: "Wrong credential" });
+            return res.status(400).json({ error: "Wrong credential" });
           }
         }
-        return res.status(400).json({ success: false, error: "No user found" });
+        return res.status(400).json({ error: "No user found" });
       } catch (error) {
         console.log(error);
         return res.status(400).send(error);

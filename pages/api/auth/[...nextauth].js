@@ -1,9 +1,14 @@
 import NextAuth from "next-auth";
+import dbConnect from "../../../lib/dbConnect";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../../../lib/mongodb";
+import { compare } from "bcrypt";
+import validator from "validator";
+import User from "../../../models/UserModel";
+import { passwordRegex } from "../../../lib/passwordRegex";
 export default NextAuth({
   adapter: MongoDBAdapter(clientPromise),
   // Configure one or more authentication providers
@@ -28,28 +33,65 @@ export default NextAuth({
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
+        // Validate email input
+        if (!credentials?.email || !validator.isEmail(credentials.email)) {
+          throw new Error("Invalid email" + credentials.email);
+        }
+        // Validate password input
+        //Regex to check if password is at least 8 characters long, contains at least one uppercase letter, one lowercase letter, one number and one special character
+        if (
+          !credentials?.password ||
+          !passwordRegex.test(credentials.password)
+        ) {
+          throw new Error("Invalid password");
+        }
+
+        await dbConnect();
+
+        // Find user with the email
+        const user = await User.findOne({
+          email: credentials?.email,
+        });
+
+        // Email Not found
+        if (!user) {
+          throw new Error("Email is not registered");
+        }
+
+        // Check hased password with DB hashed password
+        const isPasswordCorrect = await compare(
+          credentials?.password,
+          user.password
+        );
+
+        // Incorrect password
+        if (!isPasswordCorrect) {
+          throw new Error("Invalid Credentials");
+        }
+
+        return user;
         // You need to provide your own logic here that takes the credentials
         // submitted and returns either a object representing a user or value
         // that is false/null if the credentials are invalid.
         // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
-        const { email, password } = req.body;
-        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/signin`, {
-          method: "POST",
-          body: JSON.stringify({ email: email, password: password }),
-          headers: { "Content-Type": "application/json" },
-        });
 
-        const user = await res.json();
-        //console.log(user);
-        // If no error and we have user data, return it
-        if (res.ok && user.success) {
-          return user;
-        } else {
-          throw new Error(user.error);
-        }
+        // const res = await fetch(`${process.env.NEXTAUTH_URL}/api/signin`, {
+        //   method: "POST",
+        //   body: JSON.stringify(credentials),
+        //   headers: { "Content-Type": "application/json" },
+        // });
+
+        // const user = await res.json();
+        // // //console.log(user);
+        // // // If no error and we have user data, return it
+        // if (res.ok && user.success) {
+        //   return user;
+        // } else {
+        //   throw new Error(user.error);
+        // }
         // Return null if user data could not be retrieved
         //return null;
       },

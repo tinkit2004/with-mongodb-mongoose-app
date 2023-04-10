@@ -9,6 +9,7 @@ const CustomButton = ({
   buttonHoverBrightness,
   textHoverColor,
   textHoverGradientColor,
+  onClick,
 
   ...otherProps
 }: {
@@ -21,8 +22,10 @@ const CustomButton = ({
   as: string;
   href: string;
   bg: string;
+  onClick?: () => void;
 }) => (
   <MotionButton
+    onClick={onClick}
     flexShrink={0}
     {...otherProps}
     color="white"

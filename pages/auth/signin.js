@@ -1,4 +1,5 @@
 import {
+  HStack,
   Flex,
   Box,
   FormControl,
@@ -11,11 +12,15 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  Link,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import NextLink from "next/link";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectAuthType,
+  setAuthType,
+} from "../../features/authType/authTypeSlice";
+import { passwordRegex } from "../../lib/passwordRegex";
+import { useEffect, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import FormControlField from "../../components/FormControlField/form-control-field";
 import SubmitButton from "../../components/SubmitButton/submit-button";
@@ -35,49 +40,94 @@ export default function SignInCard() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
   } = methods;
 
   const { status } = useSession();
+  const dispatch = useDispatch();
+  const authType = useSelector(selectAuthType);
+  //const [authType, setAuthType] = useState("Login");
+  const oppAuthType = {
+    Login: "Register",
+    Register: "Login",
+  };
+  const [loading, setLoading] = useState(false);
+  const [controller, setController] = useState(null);
   const [{ data: accountData }] = useAccount();
   const router = useRouter();
+  const { authtypecheck } = router.query;
   const [formError, setFormError] = useState("");
   if (status === "authenticated" || accountData) {
     router.push("/");
   }
   const [showPassword, setShowPassword] = useState(false);
-  // const [signInInfo, setSignInInfo] = useState({
-  //   email: "",
-  //   password: "",
-  // });
-  // const { email, password } = signInInfo;
+  useEffect(() => {
+    return () => {
+      if (controller) {
+        controller.abort();
+      }
+    };
+  }, [controller]);
+  useEffect(() => {
+    if (authtypecheck === "register") {
+      dispatch(setAuthType("Register"));
+    } else {
+      dispatch(setAuthType("Login"));
+    }
+  }, [authtypecheck, dispatch]);
+  const registerUser = async (email, password, firstName, lastName) => {
+    const abortController = new AbortController();
+    setController(abortController);
 
-  //Code below are for native use of react controlled component
-  // const handleChange = (event) => {
-  //   const { name, value } = event.target;
-  //   setsignInInfo((prevSignInInfo) => {
-  //     return {
-  //       ...prevSignInInfo,
-  //       [name]: value,
-  //     };
-  //   });
-  //   //console.log(signUpInfo);
-  // };
-  const handleOnSubmit = async (data) => {
-    const { email, password } = data;
-    //console.log(data);
-    setFormError("");
+    try {
+      const res = await fetch("/api/signup", {
+        signal: abortController.signal,
+        method: "POST",
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          name: firstName,
+          lastName: lastName,
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!res.ok) {
+        console.log(res);
+      }
+      await loginUser(email, password);
+    } catch (error) {
+      if (error.name === "AbortError") {
+        console.log("Request aborted");
+      } else {
+        console.error("Error:", error);
+      }
+    } finally {
+      setLoading(false);
+      setController(null);
+    }
+  };
+  const loginUser = async (email, password) => {
     const signInData = await signIn("Login", {
       redirect: false,
       email: email,
       password: password,
     });
     const { error, url } = signInData;
-    console.log(error);
+    //console.log(error, url);
     setFormError(error);
     if (url != null) {
       router.push(url);
+    }
+  };
+  const handleOnSubmit = async (data) => {
+    //console.log(data);
+    const { email, password, firstName, lastName } = data;
+    setFormError("");
+    {
+      authType === "Register"
+        ? registerUser(email, password, firstName, lastName)
+        : loginUser(email, password);
     }
     reset();
   };
@@ -94,11 +144,8 @@ export default function SignInCard() {
           <Stack spacing={8} mx={"auto"} minW={"36vw"} py={12} px={6}>
             <Stack align={"center"}>
               <Heading fontSize={"4xl"} textAlign={"center"}>
-                Sign in
+                {authType === "Login" ? "Sign In" : "Sign Up"}
               </Heading>
-              <Text fontSize={"lg"} color={"gray.600"}>
-                to enjoy all of our cool features ✌️
-              </Text>
             </Stack>
             <Box
               rounded={"lg"}
@@ -107,12 +154,33 @@ export default function SignInCard() {
               p={8}
             >
               <Flex flexDirection="column">
+                {authType === "Register" && (
+                  <HStack>
+                    <Box>
+                      <FormControlField
+                        name="firstName"
+                        isRequired
+                        fieldName="First Name"
+                        type="text"
+                        id="firstName"
+                        validation={{ required: "Required" }}
+                      />
+                    </Box>
+                    <Box>
+                      <FormControlField
+                        name="lastName"
+                        fieldName="Last Name"
+                        type="text"
+                        id="lastName"
+                      />
+                    </Box>
+                  </HStack>
+                )}
                 <FormControlField
                   name="email"
                   fieldName="Email address"
                   type="email"
                   isRequired
-                  // handleChange={handleChange}
                   id="email"
                   validation={{ required: "Required" }}
                 />
@@ -129,8 +197,12 @@ export default function SignInCard() {
                       type={showPassword ? "text" : "password"}
                       {...register("password", {
                         required: "Required",
+                        pattern: {
+                          value: passwordRegex,
+                          message:
+                            "Password must be at least 8 characters, contain at least one uppercase letter, one lowercase letter, one number and one special character",
+                        },
                       })}
-                      //onChange={handleChange}
                     />
 
                     <InputRightElement h={"full"}>
@@ -155,17 +227,27 @@ export default function SignInCard() {
                   </Text>
                 )}
                 <Stack spacing={5}>
-                  <SubmitButton>Sign In</SubmitButton>
+                  <SubmitButton
+                    isLoading={isSubmitting}
+                    loadingText="Submitting"
+                    disabled={loading}
+                  >
+                    {authType === "Login" ? "Sign In" : "Sign Up"}
+                  </SubmitButton>
                   <SignInWithGoogle />
                 </Stack>
                 <WalletOption />
-                <Stack pt={6}>
+                <Stack pt={6} direction={["column", "row"]} justify="center">
                   <Text align={"center"}>
-                    Not a user?{" "}
-                    <NextLink href="/auth/signup" passHref>
-                      <Link color={"blue.400"}>Sign Up</Link>
-                    </NextLink>
+                    {authType === "Login"
+                      ? "Don't have an account? "
+                      : "Have an account? "}
                   </Text>
+                  <button
+                    onClick={() => dispatch(setAuthType(oppAuthType[authType]))}
+                  >
+                    <Text as="u">{oppAuthType[authType]}</Text>
+                  </button>
                 </Stack>
               </Flex>
             </Box>
@@ -175,9 +257,3 @@ export default function SignInCard() {
     </FormProvider>
   );
 }
-// export async function getServerSideProps(context) {
-//   const providers = await getProviders();
-//   return {
-//     props: { providers },
-//   };
-// }

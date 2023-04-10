@@ -33,7 +33,7 @@ export const getServerSideProps: GetStaticProps<ProjectsProps> = async () => {
         _id: project._id.toString(),
       };
     });
-    console.log(formattedProjects);
+    //console.log(formattedProjects);
     return {
       props: { projects: formattedProjects },
     };

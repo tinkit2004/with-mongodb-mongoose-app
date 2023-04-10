@@ -151,7 +151,7 @@ const Header = () => {
               <CustomButton
                 fontSize="2xs"
                 as="a"
-                href="/auth/signup"
+                href="/auth/signin?authtypecheck=register"
                 buttonHoverColor={linearGradient}
                 buttonHoverBrightness="95%"
                 textHoverColor="white"
