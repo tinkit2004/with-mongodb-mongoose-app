@@ -93,14 +93,15 @@ export default function SignInCard() {
         headers: { "Content-Type": "application/json" },
       });
       if (!res.ok) {
-        console.log(res);
+        const errorData = await res.json();
+        throw new Error(errorData.error);
       }
       await loginUser(email, password);
     } catch (error) {
       if (error.name === "AbortError") {
-        console.log("Request aborted");
+        setFormError("Request aborted");
       } else {
-        console.error("Error:", error);
+        setFormError(error.message);
       }
     } finally {
       setLoading(false);
