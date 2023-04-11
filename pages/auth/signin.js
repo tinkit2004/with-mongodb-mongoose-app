@@ -25,16 +25,18 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import FormControlField from "../../components/FormControlField/form-control-field";
 import SubmitButton from "../../components/SubmitButton/submit-button";
 import SignInWithGoogle from "../../components/SignInWithGoogle/sign-in-with-google";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import { useSession, signIn, getCsrfToken } from "next-auth/react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useAccount } from "wagmi";
-import dynamic from "next/dynamic";
-const WalletOption = dynamic(
-  () => import("../../components/WalletOption/walletOption.js"),
-  { ssr: false }
-);
+//SIWE
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { useAccount, useConnect, useNetwork, useSignMessage } from "wagmi";
+import { SiweMessage } from "siwe";
+//import dynamic from "next/dynamic";
+// const WalletOption = dynamic(
+//   () => import("../../components/WalletOption/walletOption.js"),
+//   { ssr: false }
+// );
 export default function SignInCard() {
   const methods = useForm({ defaultValues: { email: "", password: "" } });
   const {
@@ -44,7 +46,7 @@ export default function SignInCard() {
     reset,
   } = methods;
 
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const dispatch = useDispatch();
   const authType = useSelector(selectAuthType);
   //const [authType, setAuthType] = useState("Login");
@@ -54,11 +56,17 @@ export default function SignInCard() {
   };
   const [loading, setLoading] = useState(false);
   const [controller, setController] = useState(null);
-  const [{ data: accountData }] = useAccount();
+  //const [{ data: accountData }] = useAccount();
+  const { signMessageAsync } = useSignMessage();
+  const { chain } = useNetwork();
+  const { address, isConnected } = useAccount();
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
   const router = useRouter();
   const { authtypecheck } = router.query;
   const [formError, setFormError] = useState("");
-  if (status === "authenticated" || accountData) {
+  if (status === "authenticated") {
     router.push("/");
   }
   const [showPassword, setShowPassword] = useState(false);
@@ -76,6 +84,12 @@ export default function SignInCard() {
       dispatch(setAuthType("Login"));
     }
   }, [authtypecheck, dispatch]);
+  useEffect(() => {
+    console.log(isConnected);
+    if (isConnected && !session) {
+      handleWalletLogin();
+    }
+  }, [isConnected]);
   const registerUser = async (email, password, firstName, lastName) => {
     const abortController = new AbortController();
     setController(abortController);
@@ -131,6 +145,32 @@ export default function SignInCard() {
         : loginUser(email, password);
     }
     reset();
+  };
+  //handleWalletLogin
+  const handleWalletLogin = async () => {
+    try {
+      const callbackUrl = "/protected";
+      const message = new SiweMessage({
+        domain: window.location.host,
+        address: address,
+        statement: "Sign in with Ethereum to the app.",
+        uri: window.location.origin,
+        version: "1",
+        chainId: chain?.id,
+        nonce: await getCsrfToken(),
+      });
+      const signature = await signMessageAsync({
+        message: message.prepareMessage(),
+      });
+      signIn("credentials", {
+        message: JSON.stringify(message),
+        redirect: false,
+        signature,
+        callbackUrl,
+      });
+    } catch (error) {
+      window.alert(error);
+    }
   };
 
   return (
@@ -237,7 +277,19 @@ export default function SignInCard() {
                   </SubmitButton>
                   <SignInWithGoogle />
                 </Stack>
-                <WalletOption />
+                <SubmitButton
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (!isConnected) {
+                      connect();
+                    } else {
+                      handleWalletLogin();
+                    }
+                  }}
+                >
+                  Sign in with Web3 Wallet
+                </SubmitButton>
+                {/* <WalletOption /> */}
                 <Stack pt={6} direction={["column", "row"]} justify="center">
                   <Text align={"center"}>
                     {authType === "Login"

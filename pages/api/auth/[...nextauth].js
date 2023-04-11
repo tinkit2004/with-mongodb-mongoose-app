@@ -8,6 +8,8 @@ import clientPromise from "../../../lib/mongodb";
 import { compare } from "bcrypt";
 import validator from "validator";
 import User from "../../../models/UserModel";
+import { SiweMessage } from "siwe";
+import { getCsrfToken } from "next-auth/react";
 import { passwordRegex } from "../../../lib/passwordRegex";
 export default NextAuth({
   adapter: MongoDBAdapter(clientPromise),
@@ -94,6 +96,44 @@ export default NextAuth({
         // }
         // Return null if user data could not be retrieved
         //return null;
+      },
+    }),
+    CredentialsProvider({
+      name: "Ethereum",
+      credentials: {
+        message: {
+          label: "Message",
+          type: "text",
+          placeholder: "0x0",
+        },
+        signature: {
+          label: "Signature",
+          type: "text",
+          placeholder: "0x0",
+        },
+      },
+      async authorize(credentials, req) {
+        try {
+          const siwe = new SiweMessage(
+            JSON.parse(credentials?.message || "{}")
+          );
+          const nextAuthUrl = new URL(process.env.NEXTAUTH_URL);
+
+          const result = await siwe.verify({
+            signature: credentials?.signature || "",
+            domain: nextAuthUrl.host,
+            nonce: await getCsrfToken({ req }),
+          });
+
+          if (result.success) {
+            return {
+              id: siwe.address,
+            };
+          }
+          return null;
+        } catch (e) {
+          return null;
+        }
       },
     }),
     CredentialsProvider({
@@ -205,6 +245,9 @@ export default NextAuth({
     async session({ session, token }) {
       session.accessToken = token.accessToken;
       session.user = token.user;
+      session.address = token.sub;
+      session.user.name = token.sub;
+      session.user.image = "https://www.fillmurray.com/128/128";
 
       return session;
     },

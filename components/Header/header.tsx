@@ -12,7 +12,8 @@ import {
 } from "@chakra-ui/react";
 import CustomButton from "../CustomButton/CustomButton";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { useAccount } from "wagmi";
+import { useDisconnect } from "wagmi";
+// import { useAccount } from "wagmi";
 import { Image } from "@chakra-ui/react";
 import { useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -20,7 +21,8 @@ import { setHeaderHeight } from "../../features/header/headerSlice";
 
 const Header = () => {
   const { data: session } = useSession();
-  const [{ data: accountData }, disconnect] = useAccount();
+  const { disconnect } = useDisconnect();
+  // const [{ data: accountData }, disconnect] = useAccount();
   const [linearGradient] = useToken("bgGradient", ["linearGradient"]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
@@ -114,24 +116,29 @@ const Header = () => {
               border={{ base: isOpen ? "2px" : "none", md: "none" }}
               borderColor="black.500"
               variant="link"
-              onClick={() => signOut()}
-              padding={{ base: isOpen ? "2" : "0", md: "0" }}
-            >
-              Sign out
-            </Button>
-          ) : accountData ? (
-            <Button
-              fontSize="2xs"
-              fontWeight={{ base: isOpen ? 600 : "none", md: 400 }}
-              border={{ base: isOpen ? "2px" : "none", md: "none" }}
-              borderColor="black.500"
-              variant="link"
-              onClick={disconnect}
+              onClick={(e) => {
+                e.preventDefault();
+                disconnect();
+                signOut();
+              }}
               padding={{ base: isOpen ? "2" : "0", md: "0" }}
             >
               Sign out
             </Button>
           ) : (
+            // : accountData ? (
+            //   <Button
+            //     fontSize="2xs"
+            //     fontWeight={{ base: isOpen ? 600 : "none", md: 400 }}
+            //     border={{ base: isOpen ? "2px" : "none", md: "none" }}
+            //     borderColor="black.500"
+            //     variant="link"
+            //     onClick={disconnect}
+            //     padding={{ base: isOpen ? "2" : "0", md: "0" }}
+            //   >
+            //     Sign out
+            //   </Button>
+            // )
             <Stack
               direction={{ base: "column", md: "row" }}
               spacing={{ base: 3, md: 6 }}
